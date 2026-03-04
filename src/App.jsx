@@ -17,11 +17,11 @@ const [newFilm, setNewFilm] = useState({title:"", genre:""});
 
 const [filteredList, setFilteredList] = useState(filmList)
 const [searchInput, setSearchInput] = useState(``)
-const [filmGenres, setFilmGenres] = useState([]);
+
 
 useEffect(() => {
 setFilteredList(filmList.filter(film => film.title.toLowerCase().includes(searchInput.toLowerCase())))
-}, [searchInput])
+}, [searchInput, filmList])
 
 // Modificare (Multi-field form) un singolo oggetto
 const handleChange = (e) => {
@@ -30,12 +30,16 @@ const handleChange = (e) => {
     [e.target.name]: e.target.value})
   }
   
-// Aggiungere un oggetto ad un array di oggetti
-const handleSubmit = (e) => {
+  // Aggiungere un oggetto ad un array di oggetti
+  const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("test")
     setFilmList([
       ...filmList, newFilm, 
-    ])}
+    ])
+    setNewFilm({ title: "", genre: "" })
+    console.log(filmList)
+  }
 
 
 
@@ -69,6 +73,7 @@ const handleSubmit = (e) => {
             
             <label htmlFor="title">Titolo</label>
             <input 
+              id='title'
               name='title'
               type="text"
               value={newFilm.title}
@@ -76,6 +81,7 @@ const handleSubmit = (e) => {
             
             <label htmlFor="genere">Genere</label>
             <input 
+              id='genere'
               className='mb-2'
               name='genre'
               type="text"
